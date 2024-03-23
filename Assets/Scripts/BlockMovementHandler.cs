@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BlockMovementHandler : MonoBehaviour, IMovementHandler {
@@ -27,6 +28,15 @@ public class BlockMovementHandler : MonoBehaviour, IMovementHandler {
                 if (collider.TryGetComponent<BlockMovementHandler>(out BlockMovementHandler handler)) {
                     return handler.tryMove(direction);
                 }
+            }
+        }
+        if (overlappingTags.Contains("Player")) {
+            Collider2D characterCollider = colliders.Where(c => c.tag == "Player").First();
+            if (characterCollider.TryGetComponent<BlockMovementHandler>(out BlockMovementHandler handler)) {
+                return handler.tryMove(direction);
+            } else {
+                BlockMovementHandler newHandler = characterCollider.AddComponent<BlockMovementHandler>();
+                return newHandler.tryMove(direction);
             }
         }
 

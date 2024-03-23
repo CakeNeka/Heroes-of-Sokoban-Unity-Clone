@@ -11,7 +11,7 @@ public class WizardMovementHandler : MonoBehaviour, IMovementHandler {
     public bool tryMove(Vector3 direction) {
         RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, maxDistance, layerMask);
         // If an obstacle is found, switch positions
-        if (hit.collider.CompareTag("Movable")) {
+        if (hit.collider.CompareTag("Movable") || hit.collider.CompareTag("Player")) {
             Vector3 tempPlayerPosition = hit.collider.transform.position;
 
             hit.collider.transform.position = transform.position;
@@ -20,6 +20,7 @@ public class WizardMovementHandler : MonoBehaviour, IMovementHandler {
         }
         if (canMoveInDirection(direction)) {
             transform.position += direction;
+            return true;
         }
         return false;
     }

@@ -19,9 +19,8 @@ public class StickyMovementHandler : MonoBehaviour, IMovementHandler {
     }
 
     private void moveBlockAt(Vector3 blockPosition, Vector3 direction) {
-        Collider2D[] colliders = Physics2D.OverlapPointAll(
-            new Vector2(blockPosition.x, blockPosition.y));
-        Collider2D blockCollider = colliders.Where(c => c.CompareTag("Movable")).FirstOrDefault();
+        Collider2D[] colliders = Physics2D.OverlapPointAll(blockPosition);
+        Collider2D blockCollider = colliders.Where(c => c.CompareTag("Movable") || c.CompareTag("Player")).FirstOrDefault();
         if (blockCollider != null) {
             blockCollider.transform.position += direction;
         }
@@ -34,9 +33,6 @@ public class StickyMovementHandler : MonoBehaviour, IMovementHandler {
         string[] overlappingTags = colliders.Select(c => c.tag).ToArray();
         // Debug.Log(string.Join(",",overlappingTags));
 
-        if (overlappingTags.Contains("Wall") || overlappingTags.Contains("Movable")) {
-            return false;
-        }
-        return true;
+        return !(overlappingTags.Contains("Wall") || overlappingTags.Contains("Movable") || overlappingTags.Contains("Player"));
     }
 }

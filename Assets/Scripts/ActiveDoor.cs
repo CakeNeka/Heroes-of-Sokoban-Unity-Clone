@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ActiveDoor : MonoBehaviour {
+  public int blockingDoorIndex = 0;
+
   [SerializeField]
   private Sprite openSprite;
   [SerializeField]

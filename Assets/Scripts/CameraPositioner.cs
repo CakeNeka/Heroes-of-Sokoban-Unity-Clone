@@ -28,7 +28,6 @@ public class CameraPositioner : MonoBehaviour {
         Vector3 levelTopRight = bounds.max;
         Vector3 levelTopLeft = bounds.min;
         Vector3 camTopRight = cam.ViewportToWorldPoint(new Vector3(1,1));
-        Debug.Log(camTopRight);
 
         // Vertical overflow
         if (levelTopRight.y + margin > camTopRight.y) {
@@ -41,7 +40,6 @@ public class CameraPositioner : MonoBehaviour {
         while (levelTopRight.x > camTopRight.x && ++i < 100) {
             cam.orthographicSize += margin;
             camTopRight = cam.ViewportToWorldPoint(new Vector3(1,1));
-            Debug.Log(camTopRight);
         }
     }
 }
